@@ -28,12 +28,14 @@ class LT40Manager(CTEManager):
 
 class Region(Model):
     objects = CTEManager()
+    cte_objects = CTEManager()
     name = TextField(primary_key=True)
     parent = ForeignKey("self", null=True, on_delete=CASCADE)
 
 
 class Order(Model):
     objects = LT40Manager.from_queryset(LT40QuerySet)()
+    cte_objects = LT40Manager.from_queryset(LT40QuerySet)()
     id = AutoField(primary_key=True)
     region = ForeignKey(Region, on_delete=CASCADE)
     amount = IntegerField(default=0)
@@ -41,6 +43,7 @@ class Order(Model):
 
 class KeyPair(Model):
     objects = CTEManager()
+    cte_objects = CTEManager()
     key = CharField(max_length=32)
     value = IntegerField(default=0)
     parent = ForeignKey("self", null=True, on_delete=CASCADE)
